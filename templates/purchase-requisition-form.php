@@ -143,7 +143,7 @@
                 <td>{item1Eoc:73}</td>
             </tr>
 <?php
-    foreach( $number_fields as $field ) {
+    foreach ( $number_fields as $field ) {
         
         $value = rgar( $entry, $field->id );
         
@@ -336,11 +336,21 @@
     <table class="table1">
         <thead>
             <tr>
-                <th>Approvers</th>
+                <th>Timeline</th>
             </tr>
         </thead>
         <tbody></tbody>
     </table>
+<?php 
+    $timeline = explode( '<br>', $workflow_timeline );
+    foreach ( $timeline as $timeline_item ) {
+        if ( str_starts_with( $timeline_item, 'Outgoing' ) ) {
+            continue;
+        }
+        echo $timeline_item . '<br>';
+    }    
+?>
+    <!-- 
     <table class="table1">
         <thead>
             <tr>
@@ -370,5 +380,5 @@
                 <td>&nbsp;</td>
             </tr>
         </tbody>
-    </table>
+    </table> -->
 </div>
