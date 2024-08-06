@@ -78,6 +78,8 @@ function jo_gravityflow_notification( $notification, $form, $entry, $step ) {
             // https://codex.gravitykit.com/class_gravity_view___merge___tags.html#a3b71ab6eb3434b794090baf825b3338a
             $workflow_timeline = GFCommon::replace_variables( '{workflow_timeline} ', $form, $entry, false, true, true, 'html' );
             
+            $debug_filename = 'debug_log.txt';
+
             ob_start();
 
             include 'templates/purchase-requisition-form.php';
@@ -91,4 +93,18 @@ function jo_gravityflow_notification( $notification, $form, $entry, $step ) {
     gravity_flow()->log_debug( 'Attachment for entry_id ' . $entry['id'] . ' ' . var_export( $notification, true ) );
 
     return $notification;
+}
+
+// Define the log file path
+define('CUSTOM_PLUGIN_MODIFICATIONS_LOG_FILE', plugin_dir_path(__FILE__) . 'debug.log');
+
+function write_debug_log( $message ) {
+    // Get the current timestamp
+    $timestamp = date('Y-m-d H:i:s');
+    
+    // Format the log entry
+    $log_entry = "[$timestamp] DEBUG: $message" . PHP_EOL;
+    
+    // Write the log entry to the file
+    file_put_contents( CUSTOM_PLUGIN_MODIFICATIONS_LOG_FILE, $log_entry, FILE_APPEND );
 }

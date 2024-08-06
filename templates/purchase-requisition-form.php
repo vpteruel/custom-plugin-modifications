@@ -7,14 +7,20 @@
 ?>
 
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
     .content {
         overflow: auto;
-        width: 100%;
     }
 
     .content .table1 {
         border: 1px solid #dededf;
-        min-width: 50%;
+        width: 100%;
+        max-width: 600px;
         table-layout: fixed;
         border-collapse: collapse;
         border-spacing: 1px;
@@ -61,6 +67,32 @@
         color: #d9534f;
         border-color: #d43f3a;
     }
+
+    .timeline-container {
+        width: calc(100% - 20px);
+        padding: 0 10px 10px 10px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+    }
+
+    .timeline {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .timeline-item {
+        padding: 10px;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .timeline-item:last-child {
+        border-bottom: none;
+    }
+
+    .timeline-date {
+        color: #999999;
+    }
 </style>
 
 <div class="content" role="region" tabindex="0">
@@ -89,7 +121,7 @@
             </tr>
             <tr class="even">
                 <td><strong>Department/cost centre</strong></td>
-                <td>{Department/cost centre:8}</td>
+                <td>{Department/cost centre:196}</td>
             </tr>
             <tr class="odd">
                 <td><strong>Requisitioned by</strong></td>
@@ -333,52 +365,62 @@
         </tbody>
     </table>
     <br>
-    <table class="table1">
-        <thead>
-            <tr>
-                <th>Timeline</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-<?php 
-    $timeline = explode( '<br>', $workflow_timeline );
-    foreach ( $timeline as $timeline_item ) {
-        if ( str_starts_with( $timeline_item, 'Outgoing' ) ) {
+    <div class="timeline-container">
+        <h4>Timeline</h4>
+        <ul class="timeline">
+<?php
+    $timeline = explode( '<br />', $workflow_timeline );
+    for ( $i = 0; $i < count( $timeline ); $i++ ) {
+        $timeline_item = trim( $timeline[$i] );
+
+        if ( str_starts_with( $timeline_item, 'Outgoing Webhook:')
+            || str_starts_with( $timeline_item, 'Webhook sent. URL:' ) ) {
             continue;
         }
-        echo $timeline_item . '<br>';
+
+        if ( !empty( $timeline_item ) ) {
+            write_debug_log( $timeline_item );
+
+            $position = $i % 2 == 0 ? 'even' : 'odd';
+
+            $name_date_time_pattern = '/^(.*?):\s*(\w+ \d{1,2}, \d{4} at \d{1,2}:\d{1,2} (?:am|pm))$/i';
+            $status_pattern = '/^(.*? - .*?):\s*(Approved|Rejected)$/i';
+            $note_pattern = '/^Note:\s*(.*)$/';
+            
+            if ( preg_match( $name_date_time_pattern, $timeline_item, $matches1 ) ) {
+                $name = htmlspecialchars( $matches1[1], ENT_QUOTES, 'UTF-8' );
+                $date_time = htmlspecialchars( $matches1[2], ENT_QUOTES, 'UTF-8' );
+                
+                if ( $i > 0 ) {
+                    echo '</li>';
+                }
+                echo '<li class="timeline-item">';
+                echo '<div class="timeline-date">' . $date_time . '</div>';
+                echo '<div class="timeline-content">' . $name . '</div>';
+            }
+            else if ( preg_match( $status_pattern, $timeline_item, $matches2 ) ) {
+                $prefix = htmlspecialchars( $matches2[1], ENT_QUOTES, 'UTF-8' );
+                $status = htmlspecialchars( $matches2[2], ENT_QUOTES, 'UTF-8' );
+                $class_status = strtolower( $matches2[2] );
+
+                echo '<div class="timeline-content">' . $prefix . ' - ' . $status . '</div>';
+            }
+            else if ( preg_match( $note_pattern, $timeline_item, $matches3 ) ) {
+                $note = htmlspecialchars( $matches3[1], ENT_QUOTES, 'UTF-8' );
+
+                if ( !empty( $note ) ) {
+                    echo '<div class="timeline-content">Note: ' . $note . '</div>';
+                }
+            }
+            else {
+                echo '<div class="timeline-content">' . $timeline_item . '</div>';
+            }
+
+            if ( $i == ( count( $timeline ) - 1 ) ) {
+                echo '</li>';
+            }
+        }
     }    
-?>
-    <!-- 
-    <table class="table1">
-        <thead>
-            <tr>
-                <th>Role</th>
-                <th>Assignee</th>
-                <th>Approved?</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="odd">
-                <td>Responsible VP</td>
-                <td>{Assign to Responsible VP:58}</td>
-                <td class="approved">✔</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr class="even">
-                <td>VP Performance/CFE</td>
-                <td>{Assign to VP Performance/CFE:59}</td>
-                <td class="approved">✔</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr class="odd">
-                <td>President/CEO</td>
-                <td>{Assign to President/CEO:63}</td>
-                <td class="approved">✔</td>
-                <td>&nbsp;</td>
-            </tr>
-        </tbody>
-    </table> -->
+?> 
+    </div>
 </div>
