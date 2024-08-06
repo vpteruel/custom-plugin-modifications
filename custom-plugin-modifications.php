@@ -77,8 +77,6 @@ function jo_gravityflow_notification( $notification, $form, $entry, $step ) {
 
             // https://codex.gravitykit.com/class_gravity_view___merge___tags.html#a3b71ab6eb3434b794090baf825b3338a
             $workflow_timeline = GFCommon::replace_variables( '{workflow_timeline} ', $form, $entry, false, true, true, 'html' );
-            
-            $debug_filename = 'debug_log.txt';
 
             ob_start();
 
