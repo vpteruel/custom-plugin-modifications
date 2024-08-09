@@ -9,143 +9,167 @@
 <style>
     body {
         font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
     }
-    .container {
-        width: 700px;
-        margin: 0 auto;
-    }
-    .header {
-        background-color: #388e3c;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        border-radius: 5px 5px 0 0;
-    }
+
     .content {
-        margin: 20px 0;
+        overflow: auto;
     }
-    .section-title {
-        font-weight: bold;
-        margin-top: 20px;
-    }
-    .details-table {
+
+    .content .table1 {
+        border: 1px solid #dededf;
         width: 100%;
+        max-width: 600px;
+        table-layout: fixed;
         border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-    .details-table, .details-table th, .details-table td {
-        border: 1px solid #ddd;
-    }
-    .details-table th, .details-table td {
-        padding: 10px;
+        border-spacing: 1px;
         text-align: left;
     }
-    .details-table th {
-        background-color: #f2f2f2;
+
+    .content .table2 {
+        border: 1px solid #dededf;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+        border-spacing: 1px;
+        text-align: left;
     }
+
+    .content th {
+        border: 1px solid #dededf;
+        background-color: #eceff1;
+        color: #000000;
+        padding: 5px;
+    }
+
+    .content td {
+        border: 1px solid #dededf;
+        padding: 5px;
+    }
+
+    .content .even {
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    .content .odd {
+        background-color: #eaf2fa;
+        color: #000000;
+    }
+
+    .approved {
+        color: #5cb85c;
+        border-color: #4cae4c;
+    }
+
+    .rejected {
+        color: #d9534f;
+        border-color: #d43f3a;
+    }
+
+    .timeline-container {
+        width: calc(100% - 20px);
+        padding: 0 10px 10px 10px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+    }
+
     .timeline {
         list-style: none;
         padding: 0;
-        margin: 20px 0;
+        margin: 0;
     }
-    .timeline li {
-        position: relative;
-        margin-bottom: 20px;
-        padding-left: 30px;
+
+    .timeline-item {
+        padding: 10px;
     }
-    .timeline li:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 10px;
-        height: 10px;
-        background-color: #4caf50;
-        border-radius: 50%;
-    }
-    .link {
-        margin-top: 20px;
-        text-align: center;
-    }
-    .link a {
-        color: #388e3c;
-        text-decoration: none;
-        font-weight: bold;
+
+    .timeline-date {
+        color: #999999;
     }
 </style>
 
-<div class="container">
-    <div class="header">
-        <h1>Purchase Requisition Approved</h1>
-    </div>
-    <div class="content">
-        <p>The following purchase requisition has been approved. Below are the details:</p>
-
-        <div class="section-title">Basic Information:</div>
-        <table class="details-table">
+<div class="content" role="region" tabindex="0">
+    <table class="table1">
+        <thead>
             <tr>
-                <th>Date</th>
+                <th>Info</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table class="table1">
+        <thead></thead>
+        <tbody>
+            <tr class="odd">
+                <td><strong>Date</strong></td>
                 <td>{Date:6}</td>
             </tr>
-            <tr>
-                <th>Type</th>
+            <tr class="even">
+                <td><strong>Type</strong></td>
                 <td>{Type:5}</td>
             </tr>
-            <tr>
-                <th>Site</th>
+            <tr class="odd">
+                <td><strong>Site</strong></td>
                 <td>{Site:89}</td>
             </tr>
-            <tr>
-                <th>Department/Cost Centre</th>
+            <tr class="even">
+                <td><strong>Department/cost centre</strong></td>
                 <td>{Department/cost centre:196}<br>{Department/cost centre:196:value}</td>
             </tr>
-            <tr>
-                <th>Requisitioned by</th>
+            <tr class="odd">
+                <td><strong>Requisitioned by</strong></td>
                 <td>{Requisitioned by:56}</td>
             </tr>
-            <tr>
-                <th>Tel. ext. #</th>
+            <tr class="even">
+                <td><strong>Tel. ext. #</strong></td>
                 <td>{Tel. ext. #:92}</td>
             </tr>
-            <tr>
-                <th>Suggested supplier</th>
+            <tr class="odd">
+                <td><strong>Suggested supplier</strong></td>
                 <td>{Suggested supplier:12}</td>
             </tr>
-            <tr>
-                <th>Comments</th>
+            <tr class="even">
+                <td><strong>Comments</strong></td>
                 <td>{Comments:93}</td>
             </tr>
-        </table>
-
-        <div class="section-title">Requested Items:</div>
-    </div>
-</div>
-
-<table class="details-table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Quantity</th>
-            <th>Unit of Measure</th>
-            <th>Vendor's Catalogue No.</th>
-            <th>Description</th>
-            <th>Unit Price</th>
-            <th>Total Amount</th>
-            <th>EOC/CIP</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class="odd">
-            <td>1</td>
-            <td>{item1Qty:34}</td>
-            <td>{item1UnitMeasure:35}</td>
-            <td>{item1VendorsCatalogueNo:36}</td>
-            <td>{item1Description:71}</td>
-            <td>{item1UnitPrice:72}</td>
-            <td>{item1TotalAmount:37}</td>
-            <td>{item1Eoc:73}</td>
-        </tr>
-        <?php
+        </tbody>
+    </table>
+    <br>
+    <table class="table2">
+        <thead>
+            <tr>
+                <th>Items</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <table class="table2">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Quantity</th>
+                <th>Unit of measure</th>
+                <th>Vendor's catalogue NO.</th>
+                <th>Description</th>
+                <th>Unit price</th>
+                <th>Total amount</th>
+                <th>EOC</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="odd">
+                <td>1</td>
+                <td>{item1Qty:34}</td>
+                <td>{item1UnitMeasure:35}</td>
+                <td>{item1VendorsCatalogueNo:36}</td>
+                <td>{item1Description:71}</td>
+                <td>{item1UnitPrice:72}</td>
+                <td>{item1TotalAmount:37}</td>
+                <td>{item1Eoc:73}</td>
+            </tr>
+<?php
     foreach ( $number_fields as $field ) {
         
         $value = rgar( $entry, $field->id );
@@ -333,12 +357,11 @@
         <?php }
     }
 ?>
-    </tbody>
-</table>
-        
-<div class="container">
-    <div class="content">
-        <div class="section-title">Approval Timeline:</div>
+        </tbody>
+    </table>
+    <br>
+    <div class="timeline-container">
+        <h4>Timeline</h4>
         <ul class="timeline">
 <?php
     $timeline = explode( '<br />', $workflow_timeline );
@@ -355,8 +378,8 @@
 
             $position = $i % 2 == 0 ? 'even' : 'odd';
 
-            $status_pattern = '/^(.*? - .*?):\s*(Approved|Rejected)$/i';
             $name_date_time_pattern = '/^(.*?):\s*(\w+ \d{1,2}, \d{4} at \d{1,2}:\d{1,2} (?:am|pm))$/i';
+            $status_pattern = '/^(.*? - .*?):\s*(Approved|Rejected)$/i';
             $note_pattern = '/^Note:\s*(.*)$/';
             
             if ( preg_match( $name_date_time_pattern, $timeline_item, $matches1 ) ) {
@@ -364,40 +387,37 @@
                 $date_time = htmlspecialchars( $matches1[2], ENT_QUOTES, 'UTF-8' );
                 
                 if ( $i > 0 ) {
+                    echo '<hr>';
                     echo '</li>';
                 }
-                echo '<li>';
-                echo '<strong>' . $name . '</strong><br>';
-                echo '<span>Date: ' . $date_time . '</span><br>';
+                echo '<li class="timeline-item">';
+                echo '<div class="timeline-date">' . $date_time . '</div>';
+                echo '<div class="timeline-content">' . $name . '</div>';
             }
             else if ( preg_match( $status_pattern, $timeline_item, $matches2 ) ) {
                 $prefix = htmlspecialchars( $matches2[1], ENT_QUOTES, 'UTF-8' );
                 $status = htmlspecialchars( $matches2[2], ENT_QUOTES, 'UTF-8' );
                 $class_status = strtolower( $matches2[2] );
 
-                echo '<span>Status: ' . $prefix . ' - ' . $status . '</span><br>';
+                echo '<div class="timeline-content">' . $prefix . ' - ' . $status . '</div>';
             }
             else if ( preg_match( $note_pattern, $timeline_item, $matches3 ) ) {
                 $note = htmlspecialchars( $matches3[1], ENT_QUOTES, 'UTF-8' );
 
                 if ( !empty( $note ) ) {
-                    echo '<br><em>Note:</em> ' . $note;
+                    echo '<div class="timeline-content">Note: ' . $note . '</div>';
                 }
             }
             else {
-                echo $timeline_item;
+                echo '<div class="timeline-content">' . $timeline_item . '</div>';
             }
 
             if ( $i == ( count( $timeline ) - 1 ) ) {
+                echo '<hr>';
                 echo '</li>';
             }
         }
     }    
-?>
-        </ul>
-
-        <div class="link">
-            <p>For more details, please <a href="{workflow_entry_url}">click here</a>.</p>
-        </div>
+?> 
     </div>
 </div>
