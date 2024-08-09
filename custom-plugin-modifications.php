@@ -94,7 +94,7 @@ function jo_gravityflow_notification( $notification, $form, $entry, $step ) {
 }
 
 // Define the log file path
-define('CUSTOM_PLUGIN_MODIFICATIONS_LOG_FILE', plugin_dir_path(__FILE__) . 'debug.log');
+define('CUSTOM_PLUGIN_MODIFICATIONS_LOG_FILE', plugin_dir_path(__FILE__) . 'logs/debug.log');
 
 function write_debug_log( $message ) {
     // Get the current timestamp
