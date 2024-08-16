@@ -145,7 +145,7 @@
             <td>{item1TotalAmount:37}</td>
             <td>{item1Eoc:73}</td>
         </tr>
-        <?php
+<?php
     foreach ( $number_fields as $field ) {
         
         $value = rgar( $entry, $field->id );
